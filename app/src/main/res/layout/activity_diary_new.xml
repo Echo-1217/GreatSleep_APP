@@ -4,67 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/appback1"
     android:orientation="vertical"
     tools:context=".Diaries.DiaryNew">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/date"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/backarrow2"
+                android:layout_gravity="center"
+                android:onClick="setdone"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
         <EditText
             android:id="@+id/diary_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:singleLine="true"
             android:hint="請輸入標題"
+            android:background="#B3202020"
             android:paddingLeft="20dp"
+            android:singleLine="true"
             android:visibility="visible"></EditText>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <Button
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:text="儲存日記"
-                android:background="@drawable/searchbutton"
-                android:textStyle="bold"
-                android:textSize="18sp"></Button>
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#80A6A6A6"
+                android:src="@drawable/correctmark"
+                app:fabSize="mini"
+                app:backgroundTint="#80A6A6A6"
+                />
             <EditText
                 android:id="@+id/diary_edit"
                 android:layout_width="match_parent"
-                android:layout_height="653dp"
+                android:layout_height="match_parent"
                 android:layout_above="@+id/save_button"
                 android:gravity="top"
-                android:paddingTop="30dp"
-                android:paddingLeft="20dp"
+                android:hint="請輸入您的日記內容"
                 android:inputType="textMultiLine"
-                android:singleLine="false"
-                android:typeface="normal"
-                android:hint="請輸入您的日記內容"></EditText>
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="#B3202020"
+                android:typeface="normal"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

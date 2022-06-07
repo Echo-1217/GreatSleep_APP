@@ -4,72 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/appback2"
     android:orientation="vertical"
     tools:context=".LoginActivity">
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/ladder" />
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/loginpage" />
+    <TextView
+        android:id="@+id/great_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Great Sleep"
+        android:textSize="70dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:id="@+id/google_login"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        app:defaultColor="#4081EC"
+        android:background="#4081EC"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center"
+        android:text="Google登入"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:id="@+id/fb_login"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        app:defaultColor="#3b5998"
+        android:layout_gravity="center"
+        android:background="#3b5998"
+        android:layout_marginTop="40dp"
+        android:text="FaceBook登入"
+        android:textSize="18sp"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="150dp"
-            >
-            <Button
-                android:id="@+id/button"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:gravity="center_vertical"
-                android:text="Google登入"
-                android:textSize="18sp"
-                android:background="#4081EC"
-                android:paddingLeft="40dp"
-                android:textColor="@color/white" />
-            <ImageView
-                android:id="@+id/google_image"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignLeft="@id/button"
-                android:src="@drawable/google_login"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
-            android:layout_alignParentBottom="true"
-            >
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:text="FaceBook登入"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:paddingLeft="40dp"
-                android:textSize="18sp"
-                android:background="#3b5998" />
-            <ImageView
-                android:id="@+id/fb"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/facebook"
-                android:layout_alignLeft="@id/button2"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="5dp"
-                />
-        </RelativeLayout>
-    </RelativeLayout>
 </LinearLayout>

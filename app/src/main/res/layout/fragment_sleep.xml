@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/appback1"
     android:orientation="vertical"
-    tools:context=".SleepFragment">
+    tools:context=".SleepData.SleepFragment">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_sleep"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color1"
+        android:background="#172851"
         android:elevation="4dp"
-        app:title="睡眠分析"
-        android:theme="@style/AppTheme.ToolBarStyle"
-        >
+        android:theme="@style/Widget.ChangeFont"
+        app:title="睡眠分析">
+        <TextView
+            android:id="@+id/sleep_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        android:theme="@style/Widget.ChangeFont"
+        app:tabTextColor="#939191" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="sleep fragment" />
+        />
 
 </LinearLayout>

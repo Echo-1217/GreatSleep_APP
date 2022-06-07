@@ -1,43 +1,46 @@
 package com.example.greatsleep.Dreams;
 
-import android.content.DialogInterface;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.text.method.ScrollingMovementMethod;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.AsyncTask;
 
 import com.example.greatsleep.R;
-import com.example.greatsleep.SettingActivity;
+import com.example.greatsleep.SettingMainActivity;
+import com.example.greatsleep.TypeFaceProvider;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import dmax.dialog.SpotsDialog;
 
 public class DreamFragment extends Fragment {
     private View mainView;
     private Toolbar toolbar;
     private Button btnshow;
-    private TextView textView,errorText;
     private EditText editText;
     private String category="";
     private String str;
@@ -46,30 +49,82 @@ public class DreamFragment extends Fragment {
     private Spinner spinner;
     private String type;
     private String name;
+    private String r="";
+    private String url="http://163.13.201.92/dreamdata.php";
+    private JSONArray jsonArray;
+    JSONObject jsonObject;
+    private Integer j;
+    TextView text1;
+
+    private MyExpandableListAdapter myExpandableListAdapter;
+    private ExpandableListView expandableListView;
+    private ArrayList<String> TitleName ;//父層標題
+    private ArrayList<String> itemArray ;//子層陣列
+    private TextView introduce;
+    public AlertDialog dialog;
+
+    Typeface typeface;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        typeface= TypeFaceProvider.getTypeFace(getActivity(),"introtype.ttf");
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        StrictMode.setThreadPolicy
+                (new StrictMode.ThreadPolicy.Builder()
+                        .detectDiskReads()
+                        .detectDiskWrites()
+                        .detectNetwork()
+                        .penaltyLog()
+                        .build()
+                );
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .build()
+        );
         mainView=inflater.inflate(R.layout.fragment_dream, container, false);
+        text1=mainView.findViewById(R.id.dreamtext1);
+        text1.setTypeface(typeface);
 
+        dialog = new SpotsDialog(getActivity(),"請稍後...", R.style.Custom);
+        dialog.setCancelable(false);
+
+        expandableListView = mainView.findViewById(R.id.expandAbleListView);
+        expandableListView.setVisibility(View.INVISIBLE);
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                expandableListView.collapseGroup(groupPosition);
+                return false;
+            }
+        });
+
+        introduce=mainView.findViewById(R.id.introduce);
+        introduce.setTypeface(typeface);
         toolbar=mainView.findViewById(R.id.toolbar_dream);
+
         toolbar.inflateMenu(R.menu.menu_example);
         toolbar.getMenu().findItem(R.id.action_cancel).setVisible(false);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId()==R.id.action_setting){
-                    Intent intent=new Intent(getActivity(), SettingActivity.class);
+                    Intent intent=new Intent(getActivity(), SettingMainActivity.class);
                     startActivity(intent);
                 }
                 return false;
             }
         });
-
         btnshow = (Button) mainView.findViewById(R.id.search);
-        textView = (TextView) mainView.findViewById(R.id.textView);
         editText = (EditText)  mainView.findViewById(R.id.editText);
-        textView.setMovementMethod(ScrollingMovementMethod.getInstance());
         spinner = (Spinner) mainView.findViewById(R.id.spinner);
+        btnshow.setTypeface(typeface);
+        editText.setTypeface(typeface);
+
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity().getApplicationContext(),R.array.dream_type,R.layout.spinner_style);
         adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(adapter);
@@ -126,7 +181,6 @@ public class DreamFragment extends Fragment {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -134,58 +188,74 @@ public class DreamFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 str = editText.getText().toString().trim();
-                if(category.equals(""))
-                {
-                    Toast.makeText(getActivity(),"請選擇夢的種類！", Toast.LENGTH_SHORT).show();
-                }
-                else if(str.equals("") && !(category.equals("")))
-                {
-                    sql ="SELECT * FROM " + category ;
+                if(jsonArray!=null && str.equals("")){
                     Toast.makeText(getActivity(),"系統將顯示 『"+type+"』 選項的所有內容\n"+"(周公解夢官網提供)", Toast.LENGTH_SHORT).show();
-                    new Task().execute();
                 }
-                else
-                {
-                    sql ="SELECT * FROM " + category +" WHERE name LIKE "+"\'"+"%"+str+"%"  +  "\'";
-                    new Task().execute();
-                    Toast.makeText(getActivity(),"周公解夢官網提供", Toast.LENGTH_SHORT).show();
+                else if(jsonArray!=null && jsonArray.length()>0){
+                    Toast.makeText(getActivity(),"系統將顯示包含『"+str+"』的搜尋內容\n"+"(周公解夢官網提供)", Toast.LENGTH_SHORT).show();
                 }
+                new Task().execute();
             }
         });
-        // Inflate the layout for this fragment
-     return mainView;
+        return mainView;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        Toast.makeText(getActivity(),"不輸入搜尋內容可搜尋該類別所有內容！", Toast.LENGTH_SHORT).show();
-    }
+
+    //不需要動
     class Task extends AsyncTask<Void, Void, Void> {
-        String records = "",error = "";
+        String error = "";
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.show();
+            introduce.setVisibility(View.INVISIBLE);
+        }
         @Override
         protected Void doInBackground(Void... voids) {
-            i=0;
+            TitleName = new ArrayList<>();//父層標題
+            itemArray = new ArrayList<>();//子層陣列
+            j=0;
+            if(str.equals("") && !(category.equals("")))
+            {
+                jsonArray = DBString.DB1("select * from "+category,url);
+            }
+            else
+            {
+                jsonArray = DBString.DB1("select * from "+category+" WHERE name LIKE "+"\'"+"%"+str+"%"  +  "\'"+" order by LENGTH(name);",url);
+            }
             try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection
-                        ("jdbc:mysql://192.168.20.10:3306/imDB?characterEncoding=utf-8"
-                                ,"andro","andro"
-                        );
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sql);
-                if(!resultSet.next())
+                for(int i=0;i<jsonArray.length();i++)
                 {
-                    records+="在『"+type+"』裡沒有符合『"+str+"』的搜尋內容";
-                }
-                else
-                {
-                    while (resultSet.next()){
-                        i++;
-                        records+= "\n\n(包含"+str+"的搜尋結果) \n"+i+"、 "+resultSet.getString(2) + "\n\n" + resultSet.getString(3)
-                                .replaceAll("。","。\n").replaceAll("？","?\n")
+                    j++;
+                    jsonObject = jsonArray.getJSONObject(i);
+                    if (str.equals(""))
+                    {
+                        String t= jsonObject.getString("content")
+                                .replaceAll("。","。\n\n").replaceAll("？","?\n\n")
                                 .replaceAll("，請看下面由","。\n")
-                                .replaceAll("小編幫你整理的夢見"+resultSet.getString(2)+"的詳細解說吧。","")
-                                .replaceAll("\\("+"周公解夢官網"+"\\)","");
+                                .replaceAll("小編幫你整理的夢見"+jsonObject.getString("name")+"的詳細解說吧。","")
+                                .replaceAll("\\("+"周公解夢官網"+"\\)","")
+                                .replaceAll("此夢過後。","").replaceAll("一些意義：","一些意義："+"\n")
+                                .replaceAll("\\("+"由周公解夢","").replaceAll("/提供\\)","")
+                                .replaceAll("\\("+"來自\\）","").replaceAll("@","").replaceAll("^^","")
+                                .replaceAll("WWW@.","")
+                                .replaceAll("夢見"+jsonObject.getString("name")+"的案例分析","\n"+"夢見"+jsonObject.getString("name")+"的案例分析："+"\n\n");
+                        itemArray.add(i,t);
+                        TitleName.add(i,j+". "+jsonObject.getString("name"));
+                    }
+                    else
+                    {
+                        String t=jsonObject.getString("content")
+                                .replaceAll("。","。\n\n").replaceAll("？","?\n\n")
+                                .replaceAll("，請看下面由","。\n")
+                                .replaceAll("小編幫你整理的夢見"+jsonObject.getString("name")+"的詳細解說吧。","")
+                                .replaceAll("\\("+"周公解夢官網"+"\\)","")
+                                .replaceAll("此夢過後。","").replaceAll("一些意義：","一些意義："+"\n")
+                                .replaceAll("\\("+"由周公解夢","").replaceAll("/提供\\)","")
+                                .replaceAll("\\("+"來自\\）","").replaceAll("@","").replaceAll("^^","")
+                                .replaceAll("WWW@.","")
+                                .replaceAll("夢見"+jsonObject.getString("name")+"的案例分析","\n"+"夢見"+jsonObject.getString("name")+"的案例分析："+"\n\n");
+                        itemArray.add(i,t);
+                        TitleName.add(i,j+". "+jsonObject.getString("name"));
                     }
                 }
             }
@@ -195,14 +265,88 @@ public class DreamFragment extends Fragment {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void unused) {
-            textView.setScrollY(0);
-            textView.setText(records);
-            if(error != "")
-                errorText.setText(error);
+            if(!error.equals("")){
+                introduce.setVisibility(View.VISIBLE);
+                introduce.setText("請檢查是否已連上網路!");
+                expandableListView.setVisibility(View.INVISIBLE);
+            }
+            else if(jsonArray.length()>0){
+                expandableListView.setVisibility(View.VISIBLE);
+                myExpandableListAdapter = new MyExpandableListAdapter();
+                expandableListView.setAdapter(myExpandableListAdapter);
+            }
+            else{
+                introduce.setVisibility(View.VISIBLE);
+                introduce.setText("查無搜尋內容，請選擇相關類別!");
+                expandableListView.setVisibility(View.INVISIBLE);
+            }
+            dialog.dismiss();
             super.onPostExecute(unused);
+        }
+    }
+
+    private class MyExpandableListAdapter extends BaseExpandableListAdapter {
+        @Override
+        public int getGroupCount() {//父陣列長度
+            return TitleName.size();
+        }
+        @Override
+        public int getChildrenCount(int groupPosition) {//子陣列長度
+            return 1;
+        }
+        @Override
+        public Object getGroup(int groupPosition) {
+            return null;
+        }
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return null;
+        }
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {//設置父項目的View
+            if (convertView == null){
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.expandedlistview_item,null);
+            }
+            convertView.setTag(R.layout.expandedlistview_item,groupPosition);
+            TextView Title = convertView.findViewById(R.id.textView_ItemTitle);
+            Title.setTypeface(typeface);
+            Title.setText(TitleName.get(groupPosition));
+            return convertView;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            if (convertView == null){//設置子項目的View
+                LayoutInflater inflater = (LayoutInflater) getActivity()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.expandedlistview_child,null);
+            }
+            convertView.setTag(R.layout.expandedlistview_child,groupPosition);
+            TextView item = convertView.findViewById(R.id.textView_child1);
+            item.setTypeface(typeface);
+            item.setText(itemArray.get(groupPosition));
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {//設置子項目是否可點擊
+            return true;
         }
     }
 }

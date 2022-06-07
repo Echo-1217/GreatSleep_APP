@@ -3,18 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0E2252"
+    android:background="#232323"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/dialog_title"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:paddingLeft="30dp"
-        android:gravity="center_vertical"
-        android:background="#FFFFBB33"
-        android:textColor="@color/white"/>
+
     <TextView
         android:id="@+id/dialog_message"
         android:layout_width="match_parent"
@@ -22,12 +13,13 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:lineSpacingMultiplier="1.5"
         android:paddingHorizontal="40dp"
         android:paddingVertical="30dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/white"
+        android:layout_height="1dp"
+        android:background="#4B4B4B"
         android:layout_marginTop="15dp"
         >
     </LinearLayout>
@@ -40,25 +32,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#0E2252"
+            android:background="@drawable/dialog_btn"
             android:textSize="18dp"
+            android:textColor="#A9544D"
             android:textStyle="bold"
             android:text="取消"
             />
         <RelativeLayout
-            android:layout_width="3dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/white"/>
+            android:background="#4B4B4B"/>
         <Button
             android:id="@+id/dialog_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#0E2252"
-            android:textSize="18dp"
-            android:textStyle="bold"
+            android:background="@drawable/dialog_btn"
             android:text="確定"
-            />
+            android:textColor="#6495DB"
+            android:textSize="18dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,37 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/action_sleep"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name"
-        android:title="睡眠分析"
-        />
+        android:icon="@drawable/sleepdadaicon"
+        android:title="睡眠分析" />
 
     <item
         android:id="@+id/action_station"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name2"
-        android:title="到站提示"
-        />
+        android:icon="@drawable/subwayicon"
+        android:title="到站提示" />
     <item
         android:id="@+id/action_clock"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name3"
-        android:title="鬧鐘"
-        />
+        android:icon="@drawable/clockicon"
+        android:title="鬧鐘" />
     <item
         android:id="@+id/action_dream"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name2"
-        android:title="解夢"
-        />
+        android:icon="@drawable/dreamicon"
+        android:title="解夢" />
     <item
         android:id="@+id/action_diary"
         android:enabled="true"
-        android:icon="@drawable/ic_action_name3"
-        android:title="日記"
-        />
+        android:icon="@drawable/diary2icon"
+        android:title="日記" />
 
 </menu>

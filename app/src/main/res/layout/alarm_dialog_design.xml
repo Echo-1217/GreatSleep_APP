@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0E2252"
+    android:background="#232323"
     android:orientation="vertical">
     <TextView
         android:id="@+id/alarm_dialog_message"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:textSize="18dp"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -20,33 +20,33 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/alarm_dialog_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0E2252"
+                android:layout_alignParentRight="true"
+                android:background="#232323"
                 android:gravity="right"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
-                android:layout_alignParentRight="true"
-                android:textSize="18dp"
-                android:textColor="#FFC107"
-                android:textStyle="bold"
                 android:text="確定"
-                />
+                android:textColor="#6495DB"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/alarm_dialog_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#0E2252"
-                android:gravity="right"
                 android:layout_toLeftOf="@id/alarm_dialog_confirm"
+                android:background="#232323"
+                android:gravity="right"
                 android:paddingTop="10dp"
-                android:textSize="18dp"
-                android:textColor="#FFC107"
-                android:textStyle="bold"
                 android:text="取消"
-                />
+                android:textColor="#A9544D"
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

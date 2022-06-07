@@ -1,9 +1,12 @@
 package com.example.greatsleep.Diaries;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -11,217 +14,151 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.greatsleep.R;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
-public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder>
-{
-    private ArrayList<Diary> mDataset;//ArrayList of stored user data
-    private RecyclerView list;
-    private RecycleItemOnClickListener clickListener;
-    private DiaryDB_I db;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
+    RecycleItemOnClickListener clickListener;
+    static RecyclerView list;
+    Context context;
+    ArrayList<Diary> diaryArrayList;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    String userdocument;
+    DiaryMenuFragment font;
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    public DiaryAdapter(Context context, ArrayList<Diary> diaryArrayList, RecyclerView list) throws Exception {
+        this.list = list;
+        this.context = context;
+        this.diaryArrayList = diaryArrayList;
+
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView date;
-
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-        @SuppressLint("WrongConstant")
+        private Button btDelete;
+        private SwipeRevealLayout swipeRevealLayout;
         public ViewHolder(View v) {
             super(v);
+            preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
+            editor = preferences.edit();
+            userdocument = preferences.getString("userdocument","");
 
-            SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(DiaryMenuFragment.getAppContext());
-            float titleSize = Float.parseFloat(shr.getString("title_text", "24"));
-            float dateSize = Float.parseFloat(shr.getString("date_text", "14"));
-            boolean isCentered = shr.getString("gravity_text", "CENTER").equals("CENTER");
-
+            btDelete = v.findViewById(R.id.button_Delete);
+            swipeRevealLayout = v.findViewById(R.id.swipeLayout);
             title = (TextView) v.findViewById(R.id.ItemContent);
-            title.setTextSize(titleSize);
-
-            if (isCentered) {
-                title.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            } else {
-                title.setGravity(Gravity.CENTER_HORIZONTAL);
-                title.setTextAlignment(Gravity.RIGHT);
-            }
             date = (TextView) v.findViewById(R.id.DateText);
-            date.setTextSize(dateSize);
+
             date.setKeyListener(null);
-
-            v.setOnClickListener(this::onClick);
-            v.setOnLongClickListener(this::onLongClick);
         }
-        /**
-         * On click listener for each view in RecyclerView
-         * @param view
-         */
-        @Override
-        public void onClick(View view)
-        {
-            if(clickListener != null)
-            {
-                int pos = list.getChildAdapterPosition(view);
-                clickListener.onItemClick(view, pos);
-            }
-        }
-
-        public boolean onLongClick(View view){
-            if(clickListener != null)
-            {
-                int pos = list.getChildAdapterPosition(view);
-                clickListener.onItemLongClick(view, pos);
-            }
-            return false;
-        }
-
     }
-
-    /**
-     * Creates new ListAdapter, sets RecyclerView and its manager
-     * @param context
-     * @param recManager manager for RecyclerView
-     * @param list
-     * @throws Exception
-     */
-    public DiaryAdapter(Context context, RecyclerView.LayoutManager recManager, RecyclerView list) throws Exception
-    {
-        this.list = list;
-        list.setLayoutManager(recManager);
-        list.setAdapter(this);
-        list.setHasFixedSize(true);
-
-        db = new DiaryDB(context);
-        mDataset = db.getContent();
-    }
-
-    /**
-     * Edits corresponding data according to (String) data.getId()
-     * @param data
-     * @throws Exception
-     */
-    public void editData(Diary data) throws Exception
-    {
-        this.removeData(data);
-        this.addData(data);
-    }
-
-    /**
-     * Creates new ViewHolder
-     * @param parent
-     * @param viewType
-     * @return
-     */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public DiaryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_diary_list_item, parent, false);
         ViewHolder vh = new ViewHolder(view);
-
+        font=new DiaryMenuFragment();
         return vh;
     }
-
-    /**
-     * Sets holder on bind
-     * @param holder
-     * @param position Position of holder
-     */
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
-        holder.title.setText(mDataset.get(position).toString());
-        Log.v("diary",mDataset.get(position).toString()+"  22");
-        holder.date.setText(mDataset.get(position).getDate());
+    public void onBindViewHolder(@NonNull DiaryAdapter.ViewHolder holder, int position) {
+        Diary diary = diaryArrayList.get(position);
+        viewBinderHelper.setOpenOnlyOne(true);//設置swipe只能有一個item被拉出
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(position));//綁定Layout
+        holder.swipeRevealLayout.close(true);
+        holder.title.setText(diary.getTitle());
+        holder.date.setText(diary.getDate().substring(0,16));
 
-        //Sets different color for odd and even rows
-        if(position % 2 == 0)
-        {
-            holder.itemView.setBackgroundColor(Color.parseColor("#345798"));
-        }
-        else
-        {
-            holder.itemView.setBackgroundColor(Color.parseColor("#15233D"));
-        }
+        holder.title.setTypeface(font.typeface);
+        holder.date.setTypeface(font.typeface);
+        holder.btDelete.setTypeface(font.typeface);
+
+        holder.itemView.setBackgroundColor(Color.parseColor("#80424242"));
+
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    int pos = position;
+                    clickListener.onItemClick(v, pos);
+                }
+
+            }
+        });
+        holder.date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    int pos = position;
+                    clickListener.onItemClick(v, pos);
+                }
+            }
+        });
+
+        holder.btDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.swipeRevealLayout.close(true);
+                onDeleteClick(v, position);
+            }
+        });//holder.btDelete
     }
 
-    /**
-     * Returns number of stored data
-     * @return
-     */
+    public boolean onDeleteClick(View view,int position) {
+        if (clickListener != null) {
+            int pos = position;
+            clickListener.onItemDeleteClick(view, pos);
+        }
+        return false;
+    }
     @Override
-    public int getItemCount()
-    {
-        return mDataset.size();
+    public int getItemCount() {
+        return diaryArrayList.size();
     }
 
-    /**
-     * Adds new data
-     * @param data
-     * @throws Exception
-     */
-    public void addData(Diary data) throws Exception
-    {
-        db.addData(data);//Adds new data into file
-        mDataset.add(data);//Adds data into database
-        this.notifyItemInserted(mDataset.size() - 1);//Notify RecyclerView about changes
-    }
-
-    /**
-     * Sets click listener for RecycleItem
-     * @param clickListener
-     */
     public void setClickListener(RecycleItemOnClickListener clickListener)
     {
         this.clickListener = clickListener;
     }
 
-    /**
-     * Removes data from RecyclerView and file
-     * @param data
-     * @throws Exception
-     */
     public void removeData(Diary data) throws Exception
     {
         int pos = getPos(data);
         if(pos < 0)
             throw new Exception("Unable to find item");
 
-        db.removeData(data);
-        mDataset.remove(pos);
+        diaryArrayList.remove(pos);
+        db.collection("User").document(userdocument).collection("diary")
+                .document(data.getDate().replace("/","")).delete();
         this.notifyItemRemoved(pos);
-        this.notifyItemRangeChanged(pos, mDataset.size());
+        this.notifyDataSetChanged();
+
     }
 
-    /**
-     * Return current data at position
-     * @param pos positon of data
-     * @return
-     */
-    public Diary getData(int pos)
-    {
-        return mDataset.get(pos);
+    public Diary getData(int pos) {
+        return diaryArrayList.get(pos);
     }
-
-    /**
-     * Return current position of data stored in mDataset
-     * @param data
-     * @return
-     */
-    private int getPos(Diary data)
-    {
-        for(int i = 0; i < mDataset.size(); i++)
-        {
-            if(mDataset.get(i).getId().equals(data.getId()))
+    private int getPos(Diary data) {
+        for (int i = 0; i < diaryArrayList.size(); i++) {
+            if (diaryArrayList.get(i).getDate().equals(data.getDate()))
                 return i;
         }
-
         return -1;
     }
 }
+
+

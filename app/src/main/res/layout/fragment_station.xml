@@ -4,274 +4,267 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/appback1"
     android:orientation="vertical"
     tools:context=".Station.StationFragment">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_station"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color1"
+        android:background="#172851"
         android:elevation="4dp"
-        app:title="到站提示"
-        android:theme="@style/AppTheme.ToolBarStyle"
-        >
+        android:theme="@style/Widget.ChangeFont"
+        app:title="到站提示">
+
         <TextView
             android:id="@+id/station_information"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
-            android:textColor="@color/white"
             android:layout_gravity="center"
-            />
+            android:textColor="@color/white"
+            android:textSize="12dp" />
     </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/metrotaipeimap" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="150dp"
+                android:indeterminateDrawable="@drawable/progressbar" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5.5"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4.5">
-            <RelativeLayout
+            android:layout_weight="0.9"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/s1"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/metrotaipeimap" />
-                <androidx.core.widget.ContentLoadingProgressBar
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/bl"/>
+                <Button
+                    android:id="@+id/s2"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginHorizontal="150dp"
-                    android:indeterminateDrawable="@drawable/progressbar"
-                    />
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/br"/>
+
+                <Button
+                    android:id="@+id/s3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/r"/>
+                <Button
+                    android:id="@+id/s4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/g"/>
+                <Button
+                    android:id="@+id/s5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/o"/>
+                <Button
+                    android:id="@+id/s6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/y"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:layout_weight="5.5">
+            android:layout_weight="5"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/s1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_blue_line_btn"
-                        android:textSize="14dp"
-                        android:text="板南線"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        />
-                    <Button
-                        android:id="@+id/s2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_brown_line_btn"
-                        android:textSize="14dp"
-                        android:text="文湖線"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
-                    <Button
-                        android:id="@+id/s3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_red_line_btn"
-                        android:textSize="14dp"
-                        android:text="淡水信義線"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.7"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/s5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_orange_line_btn"
-                        android:textSize="14dp"
-                        android:text="中和新蘆線"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
-                    <Button
-                        android:id="@+id/s4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_green_line_btn"
-                        android:textSize="14dp"
-                        android:text="松山新店線"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
-                    <Button
-                        android:id="@+id/s6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/station_yellow_line_btn"
-                        android:textSize="14dp"
-                        android:text="環狀線"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/start"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/start"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="起始站:"
-                            android:textSize="16dp"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="40dp"
-                            />
+                        android:layout_marginLeft="30dp"
+                        android:text="起始站:"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/spinner_style">
                         <Spinner
                             android:id="@+id/start_station"
-                            android:layout_width="140dp"
+                            android:layout_width="150dp"
                             android:layout_height="25dp"
-                            android:spinnerMode="dialog"
+                            android:layout_gravity="center"
                             android:backgroundTint="@color/white"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="30dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/end"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="目的站:"
-                            android:textSize="16dp"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="30dp"
-                            />
-                        <Spinner
-                            android:id="@+id/end_station"
-                            android:layout_width="140dp"
-                            android:layout_height="25dp"
-                            android:spinnerMode="dialog"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginTop="30dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/target"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="到站前:"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="40dp"
-                            android:textSize="16dp"
-                            />
-                        <Button
-                            android:id="@+id/time1"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="❶"
-                            android:background="@drawable/station_time_select"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="30dp"
-                            />
-                        <Button
-                            android:id="@+id/time2"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="❷"
-                            android:background="@drawable/station_time_btn"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="10dp"
-                            />
-                        <Button
-                            android:id="@+id/time3"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:text="❸"
-                            android:background="@drawable/station_time_btn"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="10dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="分鐘提醒"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="@color/white"
-                            android:gravity="center"
-                            android:textSize="16dp"
-                            />
+                            android:spinnerMode="dialog" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/end"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        >
-                        <Button
-                            android:id="@+id/confirm"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:text="確認"
-                            android:textSize="18sp"
-                            android:background="@drawable/searchbutton"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginHorizontal="20dp"
-                            />
-                    </RelativeLayout>
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="35dp"
+                        android:text="目的站:"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="35dp"
+                        android:background="@drawable/spinner_style">
+                        <Spinner
+                            android:id="@+id/end_station"
+                            android:layout_width="150dp"
+                            android:layout_height="23dp"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/white"
+                            android:spinnerMode="dialog" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/target"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="30dp"
+                        android:text="到站前:"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/time1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/station_time_selected"
+                        android:text="❶" />
+
+                    <Button
+                        android:id="@+id/time2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/station_time_no_selected"
+                        android:text="❷" />
+
+                    <Button
+                        android:id="@+id/time3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/station_time_no_selected"
+                        android:text="❸" />
+
+                    <TextView
+                        android:id="@+id/minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="25dp"
+                        android:gravity="center"
+                        android:text="分鐘提醒"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/confirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginHorizontal="100dp"
+                        android:background="@drawable/station_and_clock_btn"
+                        android:text="確認"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+</LinearLayout>

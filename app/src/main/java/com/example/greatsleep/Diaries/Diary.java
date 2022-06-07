@@ -9,37 +9,20 @@ public class Diary {
 
     private String title;
     private String text;
-    private String id;
+    private String date;
     private static final int MAX_TITLE_LENGHT = 25;
 
-    public Diary(){
-    }
-
-    public Diary(String text, String id,String title)
+    public Diary(){}
+    public Diary(String text, String title, String date)
     {
         this.text = text;
-        this.id = id;
         this.title=title;
+        this.date = date;
     }
-
-
-    public Diary(String text,String title)
-    {
-        this.text = text;
-        this.id = genId();
-        this.title=title;
-    }
-
 
     public String getText()
     {
         return text;
-    }
-
-
-    public String getId()
-    {
-        return id;
     }
 
 
@@ -69,32 +52,15 @@ public class Diary {
         this.text = text;
     }
 
-
     public String getDate()
     {
-        int pos = id.indexOf('#');
-        return id.substring(0, pos);
+        return date;
     }
-
 
     @Override
     public String toString()
     {
         return getTitle(MAX_TITLE_LENGHT);
-    }
-
-
-    private String genId()
-    {
-        Random rand = new Random();
-        int num = rand.nextInt(10001);
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-        Date date = new Date();
-
-        String atrb = dateFormat.format(date) + "#" + num;
-
-        return atrb;
     }
 
 }

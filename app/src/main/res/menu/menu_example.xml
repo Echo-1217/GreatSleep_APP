@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_cancel"
-        android:icon="@drawable/ic_action_name4"
+        android:icon="@drawable/cancel2"
         android:title="Cancel"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+
+        />
     <item
         android:id="@+id/action_setting"
-        android:icon="@drawable/ic_action_name3"
+        android:icon="@drawable/setting"
         android:title="Setting"
         app:showAsAction="ifRoom" />
 </menu>

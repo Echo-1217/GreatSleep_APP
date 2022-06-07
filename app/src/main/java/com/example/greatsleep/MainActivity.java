@@ -8,6 +8,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+
+import com.example.greatsleep.Clock.ClockFragment;
+import com.example.greatsleep.Diaries.DiaryMenuFragment;
+import com.example.greatsleep.Dreams.DreamFragment;
+import com.example.greatsleep.SleepData.SleepFragment;
+import com.example.greatsleep.Station.StationFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -16,16 +38,14 @@ import android.view.View;
 import com.example.greatsleep.Clock.ClockFragment;
 import com.example.greatsleep.Diaries.DiaryMenuFragment;
 import com.example.greatsleep.Dreams.DreamFragment;
+import com.example.greatsleep.SleepData.SleepFragment;
 import com.example.greatsleep.Station.StationFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Field;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SettingActivity{
     FirebaseAuth firebaseAuth;
     private FragmentManager fmgr;
     private SleepFragment sleepFragment;
@@ -40,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     private int change;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         //鬧鐘儲存
         clock_preferences=getSharedPreferences("clock", Context.MODE_PRIVATE);
         clock_editor=clock_preferences.edit();
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        editor = preferences.edit();
 
         fmgr=getSupportFragmentManager();
         sleepFragment=new SleepFragment();
@@ -63,9 +88,22 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.container1,sleepFragment);
         transaction.commit();
 
+        connect();
+
         change =R.id.action_sleep;
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+
+        BottomNavigationItemView bottomNavigationItemView=bottomNavigationView.getChildAt(0).findViewById(R.id.action_sleep);
+        bottomNavigationItemView.setOnLongClickListener(v -> true);
+        bottomNavigationItemView=bottomNavigationView.getChildAt(0).findViewById(R.id.action_station);
+        bottomNavigationItemView.setOnLongClickListener(v -> true);
+        bottomNavigationItemView=bottomNavigationView.getChildAt(0).findViewById(R.id.action_clock);
+        bottomNavigationItemView.setOnLongClickListener(v -> true);
+        bottomNavigationItemView=bottomNavigationView.getChildAt(0).findViewById(R.id.action_dream);
+        bottomNavigationItemView.setOnLongClickListener(v -> true);
+        bottomNavigationItemView=bottomNavigationView.getChildAt(0).findViewById(R.id.action_diary);
+        bottomNavigationItemView.setOnLongClickListener(v -> true);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -136,12 +174,6 @@ public class MainActivity extends AppCompatActivity {
             //user login
             String email=user.getEmail();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkUser();
     }
 
     //返回鍵當作home鍵

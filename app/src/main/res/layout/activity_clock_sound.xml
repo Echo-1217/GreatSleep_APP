@@ -1,48 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:background="@drawable/appback1"
     tools:context=".Clock.ClockSound">
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="鈴聲設定"
-        android:textSize="24sp"
-        />
-
-    <RadioGroup
-        android:id="@+id/mRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <RadioButton
-            android:id="@+id/mRadioButton0"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="鈴聲1"
-            />
-
-        <RadioButton
-            android:id="@+id/mRadioButton1"
+            android:layout_height="50dp"
+            android:background="#172851">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/backarrow2"
+                android:layout_gravity="center"
+                android:onClick="setdone"
+                android:layout_marginLeft="20dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="鈴聲設定"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="鈴聲2"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/headphones1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones4"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones5"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones6"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones8"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones7"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones9"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones8"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones10"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones9"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
+            <ImageView
+                android:id="@+id/headphones3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#80FFFFFF"
+                android:layout_below="@id/headphones2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:srcCompat="@drawable/headphones" />
 
-        <RadioButton
-            android:id="@+id/mRadioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="鈴聲3"/>
-
-
-    </RadioGroup>
-
-
-
-</LinearLayout>
+            <RadioGroup
+                android:id="@+id/mRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp">
+                <RadioButton
+                    android:id="@+id/mRadioButton1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲2"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲3"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲4"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton5"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲5"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton6"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲6"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton7"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲7"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton8"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲8"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton9"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲9"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioButton
+                    android:id="@+id/mRadioButton10"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:text="鈴聲10"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="30dp"
+                    />
+            </RadioGroup>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

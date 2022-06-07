@@ -1,81 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dreamback"
     android:orientation="vertical"
-    android:background="#B2ACFA"
     tools:context=".Dreams.DreamFragment">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_dream"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color1"
-            android:elevation="4dp"
-            app:title="夢的解析"
-            android:theme="@style/AppTheme.ToolBarStyle"
-            >
-        </androidx.appcompat.widget.Toolbar>
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="170dp"
-            android:src="@drawable/images">
-        </ImageView>
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DFE6ED"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="83dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="夢的類型"
-            android:textColor="@color/black">
-        </TextView>
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="222dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
-            android:spinnerMode="dropdown"
-            android:outlineAmbientShadowColor="@color/white"
-            android:backgroundTint="@color/black"
-            >
-        </Spinner>
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_dream"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#172851"
+            android:elevation="4dp"
+            android:theme="@style/Widget.ChangeFont"
+            app:title="夢的解析">
+        </androidx.appcompat.widget.Toolbar>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#B3000000"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dreamtext1"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="6"
+            android:layout_gravity="left"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="夢的類型"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/spinner_style"
+            >
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="4"
+                android:backgroundTint="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="0dp"
-            android:layout_weight="8"
             android:layout_height="40dp"
-            android:paddingLeft="15dp"
-            android:background="@drawable/searchbutton"
+            android:layout_weight="8"
+            android:background="#80C1BFBF"
             android:hint="請輸入搜尋內容"
+            android:paddingLeft="15dp"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textColorHint="@color/white">
-        </EditText>
+            android:textColorHint="@color/white"></EditText>
+
+        <LinearLayout
+            android:layout_width="4dp"
+            android:layout_height="match_parent" />
+
         <Button
             android:id="@+id/search"
             android:layout_width="0dp"
@@ -83,18 +95,37 @@
             android:layout_weight="2"
             android:background="@drawable/searchbutton"
             android:text="搜尋"
-            android:textStyle="bold">
-        </Button>
+            android:textStyle="bold"></Button>
+
+        <LinearLayout
+            android:layout_width="4dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#DFE6ED"
-        android:hint="查詢結果"
-        android:scrollbars="vertical"
-        android:textColor="@color/black"
-        android:textColorHint="#788896">
-    </TextView>
+        android:background="#B3202020"
+        >
+        <ExpandableListView
+            android:id="@+id/expandAbleListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#80FFFFFF"
+            android:dividerHeight="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/introduce"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingTop="20dp"
+            android:textSize="16dp"
+            android:text="不輸入搜尋內容可搜尋該類別所有內容！"
+            />
+    </RelativeLayout>
 </LinearLayout>

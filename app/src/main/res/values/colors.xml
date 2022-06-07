@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color1">#05268A</color>
     <color name="transparent">#3000</color>
+    <color name="graysearch">#DFE6ED</color>
+
+    <color name="book_loading_background">#80000000</color>
+    <color name="book_loading_book">#ffffff</color>
+    <color name="book_loading_page">#ff33b5e5</color>
 </resources>

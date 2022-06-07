@@ -1,124 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/appback1"
     tools:context=".Clock.ClockFragment">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_clock"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color1"
+        android:background="#172851"
         android:elevation="4dp"
-        app:title="鬧鐘"
-        android:theme="@style/AppTheme.ToolBarStyle"
-        >
+        android:theme="@style/Widget.ChangeFont"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="鬧鐘">
+
         <TextView
             android:id="@+id/clock_information"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:layout_gravity="center"
             android:textColor="@color/white"
-            android:layout_gravity="center"
-            />
+            android:textSize="12dp" />
     </androidx.appcompat.widget.Toolbar>
-    <LinearLayout
+
+    <TimePicker
+        android:id="@+id/timerpick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <TimePicker
-            android:id="@+id/timerpick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/searchbutton"
-            android:timePickerMode="spinner"
-            />
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="#B4030D2B"
+        android:timePickerMode="spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/baseline1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/timerpick" />
+
+    <Switch
+        android:id="@+id/switch1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/white"/>
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:text="是否震動"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/baseline1"
+        app:layout_constraintBottom_toTopOf="@id/baseline2"/>
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="是否震動"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"
-            android:textSize="20dp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:text="鬧鐘音量"/>
-            <SeekBar
-                android:id="@+id/volume_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:maxHeight="6dp"
-                android:minHeight="6dp"
-                android:progressDrawable="@drawable/seek_bar_voice_bg"
-                android:thumb="@drawable/seek_bar_voice_circle"
-                />
+    <LinearLayout
+        android:id="@+id/baseline2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/switch1"
+        app:layout_constraintBottom_toTopOf="@id/volumetext"
+        />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"/>
+    <TextView
+        android:id="@+id/volumetext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:text="鬧鐘音量"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baseline2"
+        app:layout_constraintBottom_toTopOf="@id/baseline3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <SeekBar
+        android:id="@+id/volume_setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:maxHeight="6dp"
+        android:minHeight="6dp"
+        android:progressDrawable="@drawable/seek_bar_voice_bg"
+        android:thumb="@drawable/seek_bar_voice_circle"
+        app:layout_constraintHorizontal_weight="8"
+        app:layout_constraintLeft_toRightOf="@+id/volumetext"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baseline2"/>
+
+    <LinearLayout
+        android:id="@+id/baseline3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/volumetext"
+        />
+
+    <RelativeLayout
+        android:id="@+id/soundlayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/to_sound_and_game_setting_btn"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/gamelayout"
+        app:layout_constraintTop_toBottomOf="@id/baseline3"
+        app:layout_constraintBottom_toTopOf="@id/clock_confirm"
+        app:layout_constraintVertical_bias="0.3">
+
         <Button
             android:id="@+id/soundSet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            />
+            android:background="@drawable/bell" />
 
-    </LinearLayout>
-    <LinearLayout
+        <TextView
+            android:id="@+id/soundtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/soundSet"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="鈴聲設定\n"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/gamelayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/to_sound_and_game_setting_btn"
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintLeft_toRightOf="@id/soundlayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baseline3"
+        app:layout_constraintBottom_toTopOf="@id/clock_confirm"
+        app:layout_constraintVertical_bias="0.3">
+        <Button
+            android:id="@+id/gameset"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/games" />
+
+        <TextView
+            android:id="@+id/gametext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gameset"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="遊戲設定\n"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/clock_confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/clock_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="確認"
-                android:textSize="18sp"
-                android:background="@drawable/searchbutton"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="20dp"
-                />
-        </RelativeLayout>
+        android:layout_height="35dp"
+        android:layout_marginHorizontal="100dp"
+        android:background="@drawable/station_and_clock_btn"
+        android:text="確認"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    </LinearLayout>
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

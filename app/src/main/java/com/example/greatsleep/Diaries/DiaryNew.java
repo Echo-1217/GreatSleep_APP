@@ -1,12 +1,9 @@
 package com.example.greatsleep.Diaries;
 
 import android.app.AlertDialog;
-import android.app.Instrumentation;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,39 +11,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.example.greatsleep.MainActivity;
 import com.example.greatsleep.R;
+import com.example.greatsleep.TypeFaceProvider;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DiaryNew extends AppCompatActivity {
     private EditText etext;
     private EditText etitle;
-    private Button button;
+    private FloatingActionButton button;
     private DiaryMenuFragment.IntentOption mode;
-    private Diary data;
     private DiaryMenuFragment.IntentOption dialogOption;
+    private Diary data;
     TextView date;
+    Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_new);
-
-
-        SharedPreferences shr = PreferenceManager.getDefaultSharedPreferences(DiaryMenuFragment.getAppContext());
-        float textSize = Float.parseFloat(shr.getString("editor_text", "18"));
-
+        typeface= TypeFaceProvider.getTypeFace(this,"introtype.ttf");
         etext = (EditText)findViewById(R.id.diary_edit);
-        etext.setTextSize(textSize);
 
         etitle=(EditText)findViewById(R.id.diary_title);
-        etitle.setTextSize(textSize);
+        etext.setTypeface(typeface);
+        etitle.setTypeface(typeface);
 
         date=findViewById(R.id.date);
+        date.setTypeface(typeface);
 
-        button = (Button) findViewById(R.id.save_button);
+        button = findViewById(R.id.save_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,9 +67,9 @@ public class DiaryNew extends AppCompatActivity {
                 break;
             case EDIT:
                 String text = intent.getStringExtra("text");
-                String id = intent.getStringExtra("id");
                 String title=intent.getStringExtra("title");
-                data = new Diary(text,id,title);
+                String date = intent.getStringExtra("date");
+                data = new Diary(text,title,date);
                 break;
             default:
                 break;
@@ -82,23 +78,19 @@ public class DiaryNew extends AppCompatActivity {
 
         String text = getIntent().getStringExtra("text");
 
-        String date_time=getIntent().getStringExtra("id");
+        String date_time=getIntent().getStringExtra("date");
+
         if(date_time!=null) {
-            date.setText(data.getDate());
+            date.setText(date_time.substring(0,16));
         }
         else{
-            Calendar calendar;
-            calendar=Calendar.getInstance();
-            int Year=calendar.get(Calendar.YEAR);
-            int Month=calendar.get(Calendar.MONTH);
-            int Day=calendar.get(Calendar.DATE);
-            date.setText(Year+"年"+Month+"月"+Day+"日");
+            String nowDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            date.setText(nowDate);
         }
 
         if(title!=null)
         {
             etitle.setText(title, TextView.BufferType.EDITABLE);
-
         }
 
         if(text!=null)
@@ -134,6 +126,7 @@ public class DiaryNew extends AppCompatActivity {
                     intent.putExtra("text", text);
                     intent.putExtra("MODE", DiaryMenuFragment.IntentOption.NEW);
                     setResult(RESULT_OK, intent);
+                    Toast.makeText(DiaryNew.this,  "左滑可刪除日記", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else
@@ -147,14 +140,14 @@ public class DiaryNew extends AppCompatActivity {
             {
                 String title=etitle.getText().toString();
                 String text = etext.getText().toString();
-                String id = data.getId();
+                String date=data.getDate();
 
                 if(text != null && !text.isEmpty())
                 {
                     Intent intent = new Intent();
                     intent.putExtra("title",title);
                     intent.putExtra("text", text);
-                    intent.putExtra("id", id);
+                    intent.putExtra("date",date);
                     intent.putExtra("MODE", DiaryMenuFragment.IntentOption.EDIT);
                     setResult(RESULT_OK, intent);
                     finish();
@@ -180,11 +173,9 @@ public class DiaryNew extends AppCompatActivity {
             View view = getLayoutInflater().inflate(R.layout.dialog_design,null);//嵌入View
             Button d_confirm=view.findViewById(R.id.dialog_confirm);
             Button d_cancel=view.findViewById(R.id.dialog_cancel);
-            TextView dialog_title=view.findViewById(R.id.dialog_title);
             TextView dialog_message=view.findViewById(R.id.dialog_message);
             ab.setView(view);
             AlertDialog dialog=ab.create();
-            dialog_title.setText("確定要重寫嗎?");
             dialog_message.setText("原先的日記內容將會消失");
             d_confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,7 +201,6 @@ public class DiaryNew extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
             dialog.show();
         }
         else
@@ -224,10 +214,13 @@ public class DiaryNew extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("title", data.getTitle());
         intent.putExtra("text", data.getText());
-        intent.putExtra("id", data.getId());
+        intent.putExtra("date",data.getDate());
         intent.putExtra("MODE", DiaryMenuFragment.IntentOption.DELETE);
         setResult(RESULT_OK, intent);
         finish();
     }
 
+    public void setdone(View view) {
+        DiaryNew.this.finish();
+    }
 }

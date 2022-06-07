@@ -4,5 +4,29 @@
     <string name="fb_login_protocol_scheme">fb935627103892386</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="certificate">程序狀態</string>
+    <string name="bt_initial">一鍵初始化</string>
+    <string name="assets_test">get assets</string>
+    <string name="license">license</string>
+    <string name="scan_device">scan</string>
+    <string name="product_name">裝置名稱</string>
+    <string name="device_state">裝置連接狀態</string>
+    <string name="pairing">新增配對</string>
+    <string name="pair_state">配對狀態</string>
+    <string name="connect">connect</string>
+    <string name="getData">獲取手環資料</string>
+    <string name="title_activity_sava_data">SavaDataActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="vibrate">振動測試</string>
+    <string name="clear">清除裝置資料</string>
+    <string name="replace">更新數據</string>
+    <string name="data_save">月均睡眠資料</string>
+    <string name="game_view_content_description">Game view</string>
 </resources>
